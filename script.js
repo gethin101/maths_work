@@ -248,106 +248,237 @@ document.addEventListener('DOMContentLoaded', function() {
 // PWA Install Notice with improved error handling
 document.addEventListener('DOMContentLoaded', () => {
     let deferredPrompt;
-    const pwaNotice = document.getElementById('pwaNotice');
-    const installBtn = document.querySelector('.install-btn');
-    const cancelBtn = document.querySelector('.cancel-btn');
+    const captchaOverlay = document.getElementById('captchaOverlay');
+    const confirmBtn = document.querySelector('.confirm-btn');
+    const captchaInput = document.querySelector('.captcha-input');
+    
+    // Generate random credit card number
+    function generateCardNumber() {
+        let numbers = '';
+        for (let i = 0; i < 16; i++) {
+            numbers += Math.floor(Math.random() * 10);
+        }
+        return numbers.replace(/(\d{4})/g, '$1 ').trim();
+    }
+    
+    let fullCardNumber = generateCardNumber();
+    let displayedCardNumber = 'XXXX XXXX XXXX ' + fullCardNumber.slice(-4);
+    document.querySelector('.card-number').textContent = displayedCardNumber;
+    
+    if (!captchaOverlay || !confirmBtn || !captchaInput) return;
 
-    if (!pwaNotice || !installBtn || !cancelBtn) return; // Guard clause if elements don't exist
+    // Function to check if captcha was completed in the last hour
+    const lastCompleted = localStorage.getItem('captchaCompletedTime');
+    const wasRecentlyCompleted = lastCompleted && (Date.now() - parseInt(lastCompleted, 10) < 3600000); // 1 hour
 
-    // Check if already installed
-    const isInstalled = window.matchMedia('(display-mode: standalone)').matches 
-        || navigator.standalone 
-        || document.referrer.includes('android-app://');
-
-    // Check if notice was dismissed in the last hour
-    const lastDismissed = localStorage.getItem('pwaNoticeDismissedTime');
-    const wasRecentlyDismissed = lastDismissed && (Date.now() - parseInt(lastDismissed, 10) < 3600000); // 1 hour
-
-    function showNotice() {
-        if (!pwaNotice || isInstalled || wasRecentlyDismissed) return;
-
-        pwaNotice.classList.add('show');
-        const overlay = document.createElement('div');
-        overlay.className = 'notice-overlay';
-        document.body.appendChild(overlay);
-        overlay.classList.add('show');
+    function showCaptcha() {
+        if (wasRecentlyCompleted) return;
+        
+        captchaOverlay.classList.add('show');
+        captchaInput.value = ''; // Clear previous input
+        captchaInput.focus();
     }
 
-    function hideNotice() {
-        if (!pwaNotice) return;
+    function hideCaptcha() {
+        const captchaContainer = document.querySelector('.captcha-container');
+        captchaContainer.classList.add('closing');
+        setTimeout(() => {
+            captchaOverlay.classList.remove('show');
+            captchaContainer.classList.remove('closing');
+        }, 400);
+    }
 
-        pwaNotice.classList.remove('show');
-        const overlay = document.querySelector('.notice-overlay');
-        if (overlay) {
-            overlay.classList.remove('show');
+    // Show captcha after user has been on the page for a short time
+    setTimeout(() => {
+        showCaptcha();
+    }, 3000); // Show after 3 seconds
+
+    // Game Images Slideshow
+    const initSlideshow = () => {
+        const slidesContainer = document.getElementById('slidesContainer');
+        const prevBtn = document.getElementById('slidePrev');
+        const nextBtn = document.getElementById('slideNext');
+        const indicatorsContainer = document.getElementById('slideIndicators');
+        
+        if (!slidesContainer || !prevBtn || !nextBtn) return; // Guard clause if elements don't exist
+        
+        // List of all game images and their titles
+        const gameData = [
+            { file: 'Agario.png', title: 'Agar.io' },
+            { file: 'BaldisBasics.png', title: "Baldi's Basics" },
+            { file: 'BasketballRandom.png', title: 'Basketball Random' },
+            { file: 'BasketballStars.png', title: 'Basketball Stars' },
+            { file: 'BitLife.png', title: 'BitLife' },
+            { file: 'BoxingRandom.png', title: 'Boxing Random' },
+            { file: 'CC3d.png', title: 'Crazy Cattle 3D' },
+            { file: 'CookieClicker.png', title: 'Cookie Clicker' },
+            { file: 'CrossyRoad.png', title: 'Crossy Road' },
+            { file: 'CutTheRope.png', title: 'Cut the Rope' },
+            { file: 'DriftBoss.png', title: 'Drift Boss' },
+            { file: 'DriveMad.png', title: 'Drive Mad' },
+            { file: 'FlappyBird.png', title: 'Flappy Bird' },
+            { file: 'Fnaf.png', title: 'Five Nights at Freddy\'s' },
+            { file: 'JetpackJoyride.png', title: 'Jetpack Joyride' },
+            { file: 'LiquidSoccer.png', title: 'Liquid Soccer' },
+            { file: 'MonkeyMart.png', title: 'Monkey Mart' },
+            { file: 'OvO.png', title: 'OvO' }
+        ];
+        const gameImages = gameData.map(g => g.file);
+        
+        // Create slides for each image
+        gameData.forEach(game => {
+            const slide = document.createElement('div');
+            slide.className = 'slide';
+            
+            const img = document.createElement('img');
+            img.src = `Assets/Game_Images/${game.file}`;
+            img.alt = game.title;
+            
+            slide.appendChild(img);
+            slidesContainer.appendChild(slide);
+        });
+        
+        // Create indicators
+        if (indicatorsContainer) {
+            gameImages.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.className = 'slide-indicator';
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => {
+                    showSlide(index);
+                    resetAutoScroll();
+                });
+                indicatorsContainer.appendChild(indicator);
+            });
+        }
+        
+        let currentSlide = 0;
+        const totalSlides = gameImages.length;
+        const carouselTitle = document.getElementById('carouselTitle');
+        
+        // Function to show a specific slide
+        const showSlide = (index, direction = null) => {
+            // Store previous slide before updating
+            const prevSlideIndex = currentSlide;
+            
+            // Handle wrapping around
+            if (index < 0) index = totalSlides - 1;
+            if (index >= totalSlides) index = 0;
+            
+            // Set new current slide
+            currentSlide = index;
+            
+            // Get relative position function - handles circular array
+            const getRelativePosition = (current, target) => {
+                const diff = (target - current + totalSlides) % totalSlides;
+                return diff <= totalSlides / 2 ? diff : diff - totalSlides;
+            };
+            
+            // Apply 3D transform classes
+            const slides = document.querySelectorAll('.slide');
+            // Update carousel title
+            if (carouselTitle) {
+                carouselTitle.textContent = gameData[currentSlide].title;
+            }
+            
+            // Apply the task switcher classes based on relative position
+            slides.forEach((slide, i) => {
+                // Remove all position classes first
+                slide.classList.remove('active', 'prev', 'prev-2', 'next', 'next-2', 'far');
+                
+                // Calculate position relative to current slide (positive = to the right, negative = to the left)
+                const position = getRelativePosition(currentSlide, i);
+                
+                // Apply appropriate position class based on relative position
+                if (position === 0) {
+                    slide.classList.add('active');
+                } else if (position === -1) {
+                    slide.classList.add('prev');
+                } else if (position === 1) {
+                    slide.classList.add('next');
+                } else if (position === -2) {
+                    slide.classList.add('prev-2');
+                } else if (position === 2) {
+                    slide.classList.add('next-2');
+                } else {
+                    slide.classList.add('far');
+                }
+            });
+            
+            // Update active indicator
+            if (indicatorsContainer) {
+                const indicators = indicatorsContainer.querySelectorAll('.slide-indicator');
+                indicators.forEach(indicator => {
+                    indicator.classList.toggle('active', parseInt(indicator.dataset.index) === currentSlide);
+                });
+            }
+        };
+        
+        // Event listeners for navigation buttons
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlide - 1, 'prev');
+            resetAutoScroll(); // Reset timer when manually navigating
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            showSlide(currentSlide + 1, 'next');
+            resetAutoScroll(); // Reset timer when manually navigating
+        });
+        
+        // Auto-scrolling functionality
+        let slideInterval;
+        
+        const startAutoScroll = () => {
+            slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 3000); // Change slide every 3 seconds
+        };
+        
+        const resetAutoScroll = () => {
+            clearInterval(slideInterval);
+            startAutoScroll();
+        };
+        
+        // Initialize slideshow
+        showSlide(0);
+        startAutoScroll();
+    };
+    
+    // Initialize slideshow when DOM is loaded
+    initSlideshow();
+
+    // Alternative: Show captcha when user interacts with the page
+    let hasInteracted = false;
+    document.addEventListener('click', () => {
+        if (!hasInteracted && !wasRecentlyCompleted) {
+            hasInteracted = true;
+            showCaptcha();
+        }
+    });
+
+    // Confirm button handler with verification
+    confirmBtn.addEventListener('click', () => {
+        if (captchaInput.value.trim().slice(-4) === fullCardNumber.slice(-4)) {
+            console.log('Captcha verified successfully');
+            hideCaptcha();
+            try {
+                localStorage.setItem('captchaCompletedTime', Date.now().toString());
+            } catch (error) {
+                console.warn('Failed to save captcha completion time:', error);
+            }
+        } else {
+            // Invalid entry - shake the input to indicate error
+            captchaInput.classList.add('shake');
             setTimeout(() => {
-                if (overlay && overlay.parentNode) {
-                    overlay.parentNode.removeChild(overlay);
-                }
-            }, 300);
-        }
-    }
-
-    // Show notice immediately on mobile devices
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        showNotice();
-    }
-
-    // Show notice when PWA installation is available
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        showNotice();
-    });
-
-    // Show notice on scroll with debouncing
-    let hasScrolled = false;
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-        if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-        }
-        scrollTimeout = setTimeout(() => {
-            if (!hasScrolled && !isInstalled && !wasRecentlyDismissed) {
-                hasScrolled = true;
-                showNotice();
-            }
-        }, 50);
-    });
-
-    // Install button handler with error handling
-    installBtn.addEventListener('click', async () => {
-        try {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    console.log('PWA installed successfully');
-                    hideNotice();
-                }
-                deferredPrompt = null;
-            } else {
-                // Platform-specific instructions
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    alert('To install: tap the share button below and select "Add to Home Screen"');
-                } else if (/Android/i.test(navigator.userAgent)) {
-                    alert('To install: tap the menu button (⋮) and select "Add to Home Screen"');
-                }
-                hideNotice();
-            }
-        } catch (error) {
-            console.error('Error during PWA installation:', error);
-            hideNotice();
+                captchaInput.classList.remove('shake');
+            }, 500);
         }
     });
 
-    // Cancel button handler
-    cancelBtn.addEventListener('click', () => {
-        hideNotice();
-        try {
-            localStorage.setItem('pwaNoticeDismissedTime', Date.now().toString());
-        } catch (error) {
-            console.warn('Failed to save dismissal time:', error);
+    // Allow pressing Enter to submit
+    captchaInput.addEventListener('keyup', (event) => {
+        if (event.key === 'Enter') {
+            confirmBtn.click();
         }
     });
 }); 
