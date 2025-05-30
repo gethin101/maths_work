@@ -481,4 +481,82 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmBtn.click();
         }
     });
+});
+
+// Theme Toggle Functionality
+function initThemeToggle() {
+    const themeToggle = document.querySelector('.theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const favicon = document.getElementById('favicon');
+    
+    // Function to update favicon based on theme
+    function updateFavicon(theme) {
+        if (!favicon) return;
+        
+        // Create a temporary canvas to modify the favicon
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            
+            // Draw original image
+            ctx.drawImage(img, 0, 0);
+            
+            // Apply color filter based on theme
+            if (theme === 'light') {
+                // Apply black filter for light theme
+                ctx.globalCompositeOperation = 'source-in';
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            } else {
+                // Apply white filter for dark theme
+                ctx.globalCompositeOperation = 'source-in';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Update favicon
+            favicon.href = canvas.toDataURL('image/png');
+        };
+        
+        img.src = 'Assets/Images/Logo.png';
+    }
+    
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateFavicon(savedTheme);
+    } else if (prefersDarkScheme.matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateFavicon('dark');
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateFavicon(newTheme);
+    });
+    
+    // Listen for system theme changes
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            const newTheme = e.matches ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            updateFavicon(newTheme);
+        }
+    });
+}
+
+// Initialize theme toggle when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
+    // ... other existing initialization code ...
 }); 
