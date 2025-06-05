@@ -304,24 +304,30 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // List of all game images and their titles
         const gameData = [
-            { file: 'Agario.png', title: 'Agar.io' },
-            { file: 'BaldisBasics.png', title: "Baldi's Basics" },
-            { file: 'BasketballRandom.png', title: 'Basketball Random' },
-            { file: 'BasketballStars.png', title: 'Basketball Stars' },
-            { file: 'BitLife.png', title: 'BitLife' },
-            { file: 'BoxingRandom.png', title: 'Boxing Random' },
-            { file: 'CC3d.png', title: 'Crazy Cattle 3D' },
-            { file: 'CookieClicker.png', title: 'Cookie Clicker' },
-            { file: 'CrossyRoad.png', title: 'Crossy Road' },
-            { file: 'CutTheRope.png', title: 'Cut the Rope' },
-            { file: 'DriftBoss.png', title: 'Drift Boss' },
-            { file: 'DriveMad.png', title: 'Drive Mad' },
-            { file: 'FlappyBird.png', title: 'Flappy Bird' },
-            { file: 'Fnaf.png', title: 'Five Nights at Freddy\'s' },
-            { file: 'JetpackJoyride.png', title: 'Jetpack Joyride' },
-            { file: 'LiquidSoccer.png', title: 'Liquid Soccer' },
-            { file: 'MonkeyMart.png', title: 'Monkey Mart' },
-            { file: 'OvO.png', title: 'OvO' }
+            { file: 'PapasPizzaria.png', title: 'Papas Pizzaria', folderName: 'papas-game' },
+            { file: 'Paperio2.png', title: 'Paper.io 2', folderName: 'paperio2' },
+            { file: 'InfiniteCraft.png', title: 'Infinite Craft', folderName: 'infinitecraft' },
+            { file: 'DrawTheHill.png', title: 'Draw The Hill', folderName: 'draw-the-hill' },
+            { file: 'BlockBlast.png', title: 'Block Blast', folderName: 'block-blast' },
+            { file: 'SubwaySurfers.png', title: 'Subway Surfers', folderName: 'subwaysurfers' },
+            { file: 'Agario.png', title: 'Agar.io', folderName: 'agario' },
+            { file: 'BaldisBasics.png', title: "Baldi's Basics", folderName: 'baldisbasics' },
+            { file: 'BasketballRandom.png', title: 'Basketball Random', folderName: 'basketball-random' },
+            { file: 'BasketballStars.png', title: 'Basketball Stars', folderName: 'basketballstars' },
+            { file: 'BitLife.png', title: 'BitLife', folderName: 'bitlife' },
+            { file: 'BoxingRandom.png', title: 'Boxing Random', folderName: 'boxingrandom' },
+            { file: 'CC3d.png', title: 'Crazy Cattle 3D', folderName: 'cc3d' },
+            { file: 'CookieClicker.png', title: 'Cookie Clicker', folderName: 'cookieclicker' },
+            { file: 'CrossyRoad.png', title: 'Crossy Road', folderName: 'crossyroad' },
+            { file: 'CutTheRope.png', title: 'Cut the Rope', folderName: 'cut-the-rope' },
+            { file: 'DriftBoss.png', title: 'Drift Boss', folderName: 'driftboss' },
+            { file: 'DriveMad.png', title: 'Drive Mad', folderName: 'drivemad' },
+            { file: 'FlappyBird.png', title: 'Flappy Bird', folderName: 'flappy-bird' },
+            { file: 'Fnaf.png', title: 'Five Nights at Freddy\'s', folderName: 'fnaf' },
+            { file: 'JetpackJoyride.png', title: 'Jetpack Joyride', folderName: 'jetpack-joyride' },
+            { file: 'LiquidSoccer.png', title: 'Liquid Soccer', folderName: 'LiquidSoccer' },
+            { file: 'MonkeyMart.png', title: 'Monkey Mart', folderName: 'monkey-mart' },
+            { file: 'OvO.png', title: 'OvO', folderName: 'ovo' }
         ];
         const gameImages = gameData.map(g => g.file);
         
@@ -336,6 +342,18 @@ document.addEventListener('DOMContentLoaded', () => {
             
             slide.appendChild(img);
             slidesContainer.appendChild(slide);
+
+            // Add click listener to the slide itself
+            slide.addEventListener('click', () => {
+                if (slide.classList.contains('active')) {
+                    const gameFolderName = game.folderName;
+                    if (gameFolderName) {
+                        window.location.href = `Assets/Games/${gameFolderName}/index.html`;
+                    } else {
+                        console.warn('Folder name not defined for game:', game.title);
+                    }
+                }
+            });
         });
         
         // Create indicators
