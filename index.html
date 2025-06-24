@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-adsense-account" content="ca-pub-7376322210780225">
-    <meta name="google-site-verification" content="Eb7h0hlCJ2mjWQTUj5I5oERbC3iRYdrv2Ev8CwMW_jY" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RADDISHED</title>
@@ -336,6 +334,18 @@
                     });
             });
         }
+        // Captcha logic for redirecting to mango.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const confirmBtn = document.querySelector('.captcha-btn.confirm-btn');
+            const captchaInput = document.querySelector('.captcha-input');
+            if (confirmBtn && captchaInput) {
+                confirmBtn.addEventListener('click', function() {
+                    if (captchaInput.value.trim().toLowerCase() === 'mango') {
+                        window.location.href = 'mango.html';
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>
