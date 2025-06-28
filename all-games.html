@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Games</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="all-games.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
+    <style>
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 3rem auto 3rem auto;
+        padding: 0 2rem;
+      }
+      .game-card {
+        cursor: pointer;
+        text-decoration: none;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        min-height: 200px;
+        height: 200px;
+        background: var(--card-bg, #222);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        border: 1px solid var(--border-color, #333);
+        transition: all 0.3s;
+      }
+      .game-card img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+        transition: transform 0.3s, filter 0.3s;
+        filter: brightness(0.85);
+      }
+      .game-card:hover img {
+        transform: scale(1.05);
+        filter: brightness(1);
+      }
+      .game-card .badge {
+        position: absolute;
+        bottom: 15px;
+        left: 15px;
+        background: var(--secondary-bg, #444);
+        color: var(--text-color, #fff);
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        border: 1px solid var(--border-color, #333);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        z-index: 2;
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      @media (max-width: 600px) {
+        .games-grid {
+          grid-template-columns: 1fr;
+          gap: 1.2rem;
+          padding: 0 0.5rem;
+        }
+        .game-card {
+          min-height: 120px;
+          height: 120px;
+        }
+      }
+      nav, h1, .back-home-btn {
+        font-family: 'Montserrat', sans-serif !important;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+      }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav-left">
+                <img src="Assets/Images/Logo.png" alt="RADDISHED Logo" class="logo">
+                <h1>RADDISHED</h1>
+            </div>
+            <div class="nav-right">
+                <button class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
+                <a href="index.html" class="credits-btn back-home-btn" style="padding:7px 14px;margin-right:8px;margin-left:8px;display:flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;">
+                    <img src="Assets/Images/Home.png" alt="Home" style="width:26px;height:26px;display:block;filter:invert(0);">
+                </a>
+                <a href="credits.html" class="credits-btn">Credits</a>
+            </div>
+        </nav>
+    </header>
+    <h1 style="text-align:center; margin-top:16px;">All Games</h1>
+    <div class="games-grid">
+        <a class="game-card" href="Assets/Games/baldisbasics/index.html">
+          <img src="Assets/Game_Images/BaldisBasics.png" alt="Baldi's Basics">
+          <span class="badge">Baldi's Basics</span>
+        </a>
+        <a class="game-card" href="Assets/Games/basketball-random/index.html">
+          <img src="Assets/Game_Images/BasketballRandom.png" alt="Basketball Random">
+          <span class="badge">Basketball Random</span>
+        </a>
+        <a class="game-card" href="Assets/Games/basketballstars/index.html">
+          <img src="Assets/Game_Images/BasketballStars.png" alt="Basketball Stars">
+          <span class="badge">Basketball Stars</span>
+        </a>
+        <a class="game-card" href="Assets/Games/bitlife/index.html">
+          <img src="Assets/Game_Images/BitLife.png" alt="BitLife">
+          <span class="badge">BitLife</span>
+        </a>
+        <a class="game-card" href="Assets/Games/blockblast/index.html">
+          <img src="Assets/Game_Images/BlockBlast.png" alt="Block Blast">
+          <span class="badge">Block Blast</span>
+        </a>
+        <a class="game-card" href="Assets/Games/boxingrandom/index.html">
+          <img src="Assets/Game_Images/BoxingRandom.png" alt="Boxing Random">
+          <span class="badge">Boxing Random</span>
+        </a>
+        <a class="game-card" href="Assets/Games/BurgerFrights/index.html">
+          <img src="Assets/Game_Images/BurgerFrights.png" alt="Burger Frights">
+          <span class="badge">Burger Frights</span>
+        </a>
+        <a class="game-card" href="Assets/Games/cc3d/index.html">
+          <img src="Assets/Game_Images/CC3d.png" alt="CC3D">
+          <span class="badge">CC3D</span>
+        </a>
+        <a class="game-card" href="Assets/Games/cell-machine/index.html">
+          <img src="Assets/Game_Images/CellMatchine.png" alt="Cell Machine">
+          <span class="badge">Cell Machine</span>
+        </a>
+        <a class="game-card" href="Assets/Games/cookieclicker/index.html">
+          <img src="Assets/Game_Images/CookieClicker.png" alt="Cookie Clicker">
+          <span class="badge">Cookie Clicker</span>
+        </a>
+        <a class="game-card" href="Assets/Games/crossyroad/index.html">
+          <img src="Assets/Game_Images/CrossyRoad.png" alt="Crossy Road">
+          <span class="badge">Crossy Road</span>
+        </a>
+        <a class="game-card" href="Assets/Games/cut-the-rope/index.html">
+          <img src="Assets/Game_Images/CutTheRope.png" alt="Cut The Rope">
+          <span class="badge">Cut The Rope</span>
+        </a>
+        <a class="game-card" href="Assets/Games/draw-the-hill/index.html">
+          <img src="Assets/Game_Images/DrawTheHill.png" alt="Draw The Hill">
+          <span class="badge">Draw The Hill</span>
+        </a>
+        <a class="game-card" href="Assets/Games/driftboss/index.html">
+          <img src="Assets/Game_Images/DriftBoss.png" alt="Drift Boss">
+          <span class="badge">Drift Boss</span>
+        </a>
+        <a class="game-card" href="Assets/Games/drivemad/index.html">
+          <img src="Assets/Game_Images/DriveMad.png" alt="Drive Mad">
+          <span class="badge">Drive Mad</span>
+        </a>
+        <a class="game-card" href="Assets/Games/flappy-bird/index.html">
+          <img src="Assets/Game_Images/FlappyBird.png" alt="Flappy Bird">
+          <span class="badge">Flappy Bird</span>
+        </a>
+        <a class="game-card" href="Assets/Games/fnaf/index.html">
+          <img src="Assets/Game_Images/Fnaf.png" alt="FNAF">
+          <span class="badge">FNAF</span>
+        </a>
+        <a class="game-card" href="Assets/Games/fruitninja/index.html">
+          <img src="Assets/Game_Images/FruitNinja.png" alt="Fruit Ninja">
+          <span class="badge">Fruit Ninja</span>
+        </a>
+        <a class="game-card" href="Assets/Games/jetpack-joyride/index.html">
+          <img src="Assets/Game_Images/JetpackJoyride.png" alt="Jetpack Joyride">
+          <span class="badge">Jetpack Joyride</span>
+        </a>
+        <a class="game-card" href="Assets/Games/LiquidSoccer/index.html">
+          <img src="Assets/Game_Images/LiquidSoccer.png" alt="Liquid Soccer">
+          <span class="badge">Liquid Soccer</span>
+        </a>
+        <a class="game-card" href="Assets/Games/monkey-mart/index.html">
+          <img src="Assets/Game_Images/MonkeyMart.png" alt="Monkey Mart">
+          <span class="badge">Monkey Mart</span>
+        </a>
+        <a class="game-card" href="Assets/Games/motox3m/index.html">
+          <img src="Assets/Game_Images/Motoc3M.png" alt="Moto X3M">
+          <span class="badge">Moto X3M</span>
+        </a>
+        <a class="game-card" href="Assets/Games/ovo/index.html">
+          <img src="Assets/Game_Images/OvO.png" alt="OvO">
+          <span class="badge">OvO</span>
+        </a>
+        <a class="game-card" href="Assets/Games/papas-game/index.html">
+          <img src="Assets/Game_Images/PapasPizzaria.png" alt="Papa's Pizzaria">
+          <span class="badge">Papa's Pizzaria</span>
+        </a>
+        <a class="game-card" href="Assets/Games/paperio2/index.html">
+          <img src="Assets/Game_Images/Paperio2.png" alt="Paper.io 2">
+          <span class="badge">Paper.io 2</span>
+        </a>
+        <a class="game-card" href="Assets/Games/stickman/index.html">
+          <img src="Assets/Game_Images/StickmanHook.png" alt="Stickman Hook">
+          <span class="badge">Stickman Hook</span>
+        </a>
+        <a class="game-card" href="Assets/Games/subwaysurfers/index.html">
+          <img src="Assets/Game_Images/SubwaySurfers.png" alt="Subway Surfers">
+          <span class="badge">Subway Surfers</span>
+        </a>
+        <a class="game-card" href="Assets/Games/tanuki-sunset/index.html">
+          <img src="Assets/Game_Images/TanukiSunset.png" alt="Tanuki Sunset">
+          <span class="badge">Tanuki Sunset</span>
+        </a>
+        <a class="game-card" href="Assets/Games/temple-run-2/index.html">
+          <img src="Assets/Game_Images/TempleRun.png" alt="Temple Run 2">
+          <span class="badge">Temple Run 2</span>
+        </a>
+        <a class="game-card" href="Assets/Games/tiny-fishing/index.html">
+          <img src="Assets/Game_Images/TinyFishing.png" alt="Tiny Fishing">
+          <span class="badge">Tiny Fishing</span>
+        </a>
+    </div>
+</body>
+</html>
