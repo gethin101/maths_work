@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RADDISHED Soundboard</title>
+    <link rel="stylesheet" href="../styles.css">
+    <style>
+        .soundboard-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 24px;
+            background: var(--card-bg, #181818);
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+        }
+        .soundboard-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 32px;
+            letter-spacing: 2px;
+        }
+        .sounds-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+        }
+        .sound-btn {
+            background: var(--primary, #ff3c3c);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            padding: 18px 10px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.2s, transform 0.1s;
+        }
+        .sound-btn:hover, .sound-btn:focus {
+            background: var(--primary-dark, #c62828);
+            transform: scale(1.04);
+        }
+    </style>
+</head>
+<body>
+    <div class="soundboard-container">
+        <div class="soundboard-title">RADDISHED Soundboard</div>
+        <div class="sounds-grid">
+            <button class="sound-btn" data-sound="SnapNotification.mp3">SnapNotification</button>
+            <button class="sound-btn" data-sound="SnapchatNotificationLong.mp3">SnapchatNotificationLong</button>
+            <button class="sound-btn" data-sound="Notification.mp3">Notification</button>
+            <button class="sound-btn" data-sound="Aura.mp3">Aura</button>
+            <button class="sound-btn" data-sound="PIPE.mp3">PIPE</button>
+            <button class="sound-btn" data-sound="Bruh.mp3">Bruh</button>
+            <button class="sound-btn" data-sound="Snore.mp3">Snore</button>
+            <button class="sound-btn" data-sound="WetFart.mp3">WetFart</button>
+            <button class="sound-btn" data-sound="Indain.mp3">Indain</button>
+            <button class="sound-btn" data-sound="blueshirt.mp3">blueshirt</button>
+            <button class="sound-btn" data-sound="DO NOT REDEEM.mp3">DO NOT REDEEM</button>
+            <button class="sound-btn" data-sound="Coughing-vibe-.mp3">Coughing-vibe-</button>
+            <button class="sound-btn" data-sound="Blox Fruits.mp3">Blox Fruits</button>
+            <button class="sound-btn" data-sound="SYFM.mp3">SYFM</button>
+            <button class="sound-btn" data-sound="MANGOS.mp3">MANGOS</button>
+            <button class="sound-btn" data-sound="SPLAT.mp3">SPLAT</button>
+            <button class="sound-btn" data-sound="67.mp3">67</button>
+            <button class="sound-btn" data-sound="airhorn.mp3">airhorn</button>
+            <button class="sound-btn" data-sound="nuke.mp3">nuke</button>
+            <button class="sound-btn" data-sound="ponk.mp3">ponk</button>
+            <button class="sound-btn" data-sound="GET OUT.mp3">GET OUT</button>
+            <button class="sound-btn" data-sound="Mustard-Meme-Sound.mp3">Mustard-Meme-Sound</button>
+        </div>
+    </div>
+    <audio id="audio-player"></audio>
+    <script>
+        const buttons = document.querySelectorAll('.sound-btn');
+        const audioPlayer = document.getElementById('audio-player');
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const sound = btn.getAttribute('data-sound');
+                audioPlayer.src = `Sounds/${sound}`;
+                audioPlayer.currentTime = 0;
+                audioPlayer.play();
+            });
+        });
+    </script>
+</body>
+</html>
