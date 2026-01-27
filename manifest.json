@@ -1,6 +1,6 @@
 {
-    "name": "RADDISHED",
-    "short_name": "RADDISHED",
+    "name": "RADDIFY",
+    "short_name": "RADDIFY",
     "description": "A collection of awesome stuff curated just for you",
     "start_url": "/",
     "display": "standalone",
@@ -11,6 +11,12 @@
         {
             "src": "Assets/Images/Icon.png",
             "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "Assets/Images/Icon.png",
+            "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
         }
