@@ -1,7 +1,7 @@
 {
-    "name": "RADDIFY",
-    "short_name": "RADDIFY",
-    "description": "A collection of awesome stuff curated just for you",
+    "name": "MATHS",
+    "short_name": "MATHS",
+    "description": "Lots of educational maths revision work",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#000000",
