@@ -1,1 +1,55 @@
-<p><a href="page.html">games</a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            background-image: url("Assets/Images/hidden.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Secret button positioned relative to screen size */
+        .secret-btn {
+            position: absolute;
+
+            /* Position over the bottom-right cookie badge */
+            bottom: 5%;   /* adjust if needed */
+            right: 5%;    /* adjust if needed */
+
+            width: 120px;   /* scales well on laptop/tablet */
+            height: 120px;
+
+            cursor: pointer;
+            opacity: 0;     /* invisible */
+        }
+
+        /* Make button scale on smaller screens */
+        @media (max-width: 900px) {
+            .secret-btn {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .secret-btn {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="page.html" class="secret-btn"></a>
+</body>
+</html>
