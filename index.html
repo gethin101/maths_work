@@ -11,28 +11,32 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
+
+            /* Your background image */
             background-image: url("Assets/Images/hidden.png");
-            background-size: cover;
-            background-position: center;
+
+            /* Make the image slightly smaller vertically */
+            background-size: 100% 95%;
+
+            /* Move the image up a tiny bit */
+            background-position-y: -10px;
+
+            background-position-x: center;
             background-repeat: no-repeat;
         }
 
-        /* Secret button positioned relative to screen size */
+        /* Invisible secret button */
         .secret-btn {
             position: absolute;
-
-            /* Position over the bottom-right cookie badge */
-            bottom: 5%;   /* adjust if needed */
-            right: 5%;    /* adjust if needed */
-
-            width: 120px;   /* scales well on laptop/tablet */
+            bottom: 5%;
+            right: 5%;
+            width: 120px;
             height: 120px;
-
             cursor: pointer;
-            opacity: 0;     /* invisible */
+            opacity: 0;
         }
 
-        /* Make button scale on smaller screens */
+        /* Tablet scaling */
         @media (max-width: 900px) {
             .secret-btn {
                 width: 90px;
@@ -40,6 +44,7 @@
             }
         }
 
+        /* Phone scaling */
         @media (max-width: 600px) {
             .secret-btn {
                 width: 70px;
