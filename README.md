@@ -1,11 +1,14 @@
 
 
 index.html - maths front page
+
 page.html - main webpage structure
+
 styles.css - all styling and animations
+
 script.js - interactions and functions
 
-## Game structure
+Game structure
 ```html
 <div class="game-card">
     <img src="path-to-game-image" alt="Game Name">
@@ -13,7 +16,7 @@ script.js - interactions and functions
 </div>
 ```
 
-### Color styling
+Color styling
 
 The main colors can be modified in `styles.css`:
 - Background color: `#0f0f0f`
